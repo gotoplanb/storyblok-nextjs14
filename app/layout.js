@@ -1,7 +1,17 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { storyblokInit, apiPlugin } from "@storyblok/react/rsc";
+import StoryblokProvider from "../components/StoryblokProvider";
 
 const inter = Inter({ subsets: ["latin"] });
+
+storyblokInit({
+  apiOptions: {
+    region: "us",
+  },
+  accessToken: "{{YOUR_TOKEN}}",
+  use: [apiPlugin],
+});
 
 export const metadata = {
   title: "Create Next App",
@@ -10,8 +20,10 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
-  );
+    <StoryblokProvider>
+         <html lang="en">
+             <body>{children}</body>
+        </html>
+    </StoryblokProvider>
+  )
 }
